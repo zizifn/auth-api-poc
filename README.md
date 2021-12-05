@@ -4,3 +4,7 @@
 
 1. Get /api/auth0/note
 2. Post /api/auth0/note
+
+## 服务已经使用 action 部署到 heroku 上
+
+https://oauth2-api-note.herokuapp.com
