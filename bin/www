@@ -6,6 +6,7 @@
 
 var app = require('../app');
 const { PORT, MONGO_DB_URL, NODE_ENV } = require('../config/config');
+const { winstonLogger } = require('../utils/middleware.js')
 var debug = require('debug')('auth');
 var http = require('http');
 const mongoose = require('mongoose');
@@ -104,5 +105,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  winstonLogger.info('Listening on ' + bind);
 }
