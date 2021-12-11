@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 var corsOptions = {
   //zizifn.github.io
-  origin: ["http://localhost:4300", /\.herokuapp\.com$/, /\.zizi\.press$/, /\.zizifn\.github\.io$/],
+  origin: ["http://localhost:4300", /\herokuapp\.com$/, /\zizi\.press$/, /\zizifn\.github\.io$/],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use('/', indexRouter);
