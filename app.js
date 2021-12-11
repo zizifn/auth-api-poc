@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -19,9 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+var corsOptions = {
+  origin: ["http://localhost:4300", /\.herokuapp\.com$/, /\.zizi\.press$/],
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 app.use('/', indexRouter);
-app.use('/api/auth0', auth0JWTCheck, notesRouter);
+app.use('/api/auth0', cors(corsOptions), auth0JWTCheck, notesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
