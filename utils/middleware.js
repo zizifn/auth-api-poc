@@ -27,6 +27,9 @@ const addCrossOriginHeader = (req, resp, next) => {
     if (req.query['Cross-Origin-Opener-Policy']) {
         resp.header('Cross-Origin-Opener-Policy', req.query['Cross-Origin-Opener-Policy']);
     }
+    if (req.query['X-Content-Type-Options']) {
+        resp.header('X-Content-Type-Options', req.query['X-Content-Type-Options']);
+    }
 
     next();
 }
