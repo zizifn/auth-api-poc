@@ -11,8 +11,8 @@
 
 ## COEP COOP CORP test
 
-/corss-origin-header/\*
-/corss-origin-header/favicon.ico?Cross-Origin-Resource-Policy=same-site
+1. /corss-origin-header/\*
+2. /corss-origin-header/favicon.ico?Cross-Origin-Resource-Policy=same-site
 
 ## 服务已经使用 action 部署到 heroku 上
 
