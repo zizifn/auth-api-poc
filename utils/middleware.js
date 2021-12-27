@@ -17,7 +17,22 @@ const winstonLogger = winston.createLogger({
     ],
 });
 
+const addCrossOriginHeader = (req, resp, next) => {
+    if (req.query['Cross-Origin-Resource-Policy']) {
+        resp.header('Cross-Origin-Resource-Policy', req.query['Cross-Origin-Resource-Policy']);
+    }
+    if (req.query['Cross-Origin-Embedder-Policy']) {
+        resp.header('Cross-Origin-Embedder-Policy', req.query['Cross-Origin-Embedder-Policy']);
+    }
+    if (req.query['Cross-Origin-Opener-Policy']) {
+        resp.header('Cross-Origin-Opener-Policy', req.query['Cross-Origin-Opener-Policy']);
+    }
+
+    next();
+}
+
 module.exports = {
     auth0JWTCheck,
-    winstonLogger
+    winstonLogger,
+    addCrossOriginHeader
 }
