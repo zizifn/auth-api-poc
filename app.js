@@ -35,6 +35,7 @@ const sess = {
   secret: AUTH0_API_SIGN_SECRET,
   resave: false,
   saveUninitialized: true,
+  proxy: true,
   cookie: {
     httpOnly: true,
     maxAge: 3600 * 12
@@ -42,7 +43,6 @@ const sess = {
 }
 
 if (NODE_ENV === 'production') {
-  sess.cookie.proxy = true;
   sess.cookie.secure = true; // serve secure cookies
   sess.cookie.sameSite = "none"
 }
