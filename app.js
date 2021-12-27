@@ -7,7 +7,12 @@ var logger = require('morgan');
 require('dotenv').config()
 var indexRouter = require('./routes/index');
 var notesRouter = require('./routes/notes.js');
-const { auth0JWTCheck } = require('./utils/middleware.js')
+var sessionRouter = require('./routes/session.js');
+var corssOriginRouter = require('./routes/cross-origin.js');
+var session = require('express-session')
+const { NODE_ENV, AUTH0_API_SIGN_SECRET } = require('./config/config.js');
+const { auth0JWTCheck, addCrossOriginHeader } = require('./utils/middleware.js');
+const { NONAME } = require('dns');
 var app = express();
 require('express-async-errors')
 
@@ -26,6 +31,23 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use('/', indexRouter);
+const sess = {
+  secret: AUTH0_API_SIGN_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    maxAge: 3600 * 12
+  }
+}
+
+if (NODE_ENV === 'production') {
+  sess.cookie.secure = true; // serve secure cookies
+  sess.cookie.sameSite = "none"
+}
+
+app.use('/corss-origin-header', addCrossOriginHeader, cors(corsOptions), corssOriginRouter);
+app.use('/session', session(sess), cors(corsOptions), sessionRouter);
 app.use('/api/auth0', cors(corsOptions), auth0JWTCheck, notesRouter);
 
 // catch 404 and forward to error handler

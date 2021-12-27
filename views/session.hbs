@@ -1,0 +1,20 @@
+<meta name="referrer" content="no-referrer">
+<h1>session test ({{login}})</h1>
+<h2>via post</h2>
+<form action="/session/login" class="session-login" method="post">
+    <label for="username">username</label>
+    <input type="text" name="username" id="username">
+    <label for="password">pwd</label>
+    <input type="text" name="pwd" id="password">
+    <button type="submit">login</button>
+</form>
+<h2>via get</h2>
+<form action="/session/login" class="session-login" method="get">
+    <label for="username">username</label>
+    <input type="text" name="username" id="username">
+    <label for="password">pwd</label>
+    <input type="text" name="pwd" id="password">
+    <button type="submit">login</button>
+</form>
+
+
