@@ -42,7 +42,8 @@ const sess = {
 }
 
 if (NODE_ENV === 'production') {
-  sess.cookie.proxy = true; // serve secure cookies
+  sess.cookie.proxy = true;
+  sess.cookie.secure = true; // serve secure cookies
   sess.cookie.sameSite = "none"
 }
 
