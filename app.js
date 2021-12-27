@@ -34,7 +34,7 @@ app.use('/', indexRouter);
 const sess = {
   secret: AUTH0_API_SIGN_SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     httpOnly: true,
     maxAge: 3600 * 12
