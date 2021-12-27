@@ -31,8 +31,14 @@ const addCrossOriginHeader = (req, resp, next) => {
     next();
 }
 
+const disableCache = (req, resp, next) => {
+    resp.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next()
+}
+
 module.exports = {
     auth0JWTCheck,
     winstonLogger,
-    addCrossOriginHeader
+    addCrossOriginHeader,
+    disableCache
 }

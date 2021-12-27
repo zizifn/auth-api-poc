@@ -11,7 +11,7 @@ var sessionRouter = require('./routes/session.js');
 var corssOriginRouter = require('./routes/cross-origin.js');
 var session = require('express-session')
 const { NODE_ENV, AUTH0_API_SIGN_SECRET } = require('./config/config.js');
-const { auth0JWTCheck, addCrossOriginHeader } = require('./utils/middleware.js');
+const { auth0JWTCheck, addCrossOriginHeader, disableCache } = require('./utils/middleware.js');
 const { NONAME } = require('dns');
 var app = express();
 require('express-async-errors')
@@ -42,13 +42,13 @@ const sess = {
 }
 
 if (NODE_ENV === 'production') {
-  sess.cookie.secure = true; // serve secure cookies
+  sess.cookie.proxy = true; // serve secure cookies
   sess.cookie.sameSite = "none"
 }
 
-app.use('/corss-origin-header', addCrossOriginHeader, cors(corsOptions), corssOriginRouter);
-app.use('/session', session(sess), cors(corsOptions), sessionRouter);
-app.use('/api/auth0', cors(corsOptions), auth0JWTCheck, notesRouter);
+app.use('/corss-origin-header', addCrossOriginHeader, cors(corsOptions), disableCache, corssOriginRouter);
+app.use('/session', session(sess), cors(corsOptions), disableCache, sessionRouter);
+app.use('/api/auth0', cors(corsOptions), auth0JWTCheck, disableCache, notesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
