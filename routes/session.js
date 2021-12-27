@@ -17,6 +17,7 @@ router.get("/", async function (req, res, next) {
   if (req.session.login) {
     login = "login";
   }
+  res.cookie('cookieName', 'test', { maxAge: 900000, httpOnly: true });
   res.render('session', { login });
 });
 router.post("/login", async function (req, res, next) {
