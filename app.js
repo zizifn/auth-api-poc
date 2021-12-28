@@ -38,7 +38,7 @@ const sess = {
   proxy: true,
   cookie: {
     httpOnly: true,
-    maxAge: 3600 * 12
+    maxAge: 3600 * 12 * 1000
   }
 }
 
