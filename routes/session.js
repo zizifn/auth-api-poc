@@ -28,25 +28,22 @@ router.post("/login", async function (req, res, next) {
   }
   res.json({ message })
 });
-router.post("/note", async function (req, res, next) {
-  if (!req.user?.scope?.includes(writeNoteScope)) {
-    return next({ status: 401, message: "not allow create note" });
+
+
+router.post("/json", async function (req, res, next) {
+  if (req.session.login) {
+    res.json(notes)
+  } else {
+    res.json({ message: 'no login' })
   }
-  const note = new MongoNote({
-    content: req.body.content,
-    important: req.body.important || false,
-    date: new Date(),
-    userId: req.user?.sub,
-  });
-  console.log(note);
-  const savedNote = await note.save();
-  res.json(savedNote);
 });
-router.delete("/note/:id", function (req, res, next) {
-  res.json(notes);
-});
-router.put("/note/:id", function (req, res, next) {
-  res.json(notes);
+
+router.post("/json", async function (req, res, next) {
+  if (req.session.login) {
+    res.json(notes)
+  } else {
+    res.json({ message: 'no login' })
+  }
 });
 
 module.exports = router;

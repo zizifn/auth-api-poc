@@ -13,6 +13,8 @@
 
 1. /corss-origin-header/\*
 2. /corss-origin-header/favicon.ico?Cross-Origin-Resource-Policy=same-site
+3. GET /corss-origin-header/json
+4. POST /corss-origin-header/json
 
 ## 服务已经使用 action 部署到 heroku 上
 
