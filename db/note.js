@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
-const noteSchema = new mongoose.Schema({
+const noteSchema = new Schema({
     userId: {
         type: String,
         required: true,
@@ -23,9 +24,9 @@ noteSchema.set('toJSON', {
     }
 });
 
-const MongoNote = mongoose.model('Note', noteSchema);
+const MongoNote = model('Note', noteSchema);
 
-module.exports = {
+export default {
     MongoNote
 }
 

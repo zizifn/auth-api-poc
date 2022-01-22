@@ -4,12 +4,19 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-const { PORT, MONGO_DB_URL, NODE_ENV } = require('../config/config');
-const { winstonLogger } = require('../utils/middleware.js')
-var debug = require('debug')('auth');
-var http = require('http');
-const mongoose = require('mongoose');
+import '../utils/tracing.js'
+
+import { MONGO_DB_URL, NODE_ENV, PORT } from '../config/config.js';
+
+import app from '../app.js';
+import { createServer } from 'http';
+import debug from 'debug';
+import pkg from 'mongoose';
+import { winstonLogger } from '../utils/middleware.js';
+
+const { set, connect } = pkg;
+
+debug('auth');
 
 
 /**
@@ -23,29 +30,32 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 // debug info
 if (NODE_ENV !== 'production') {
-  mongoose.set('debug', true);
+  set('debug', true);
 }
-mongoose.connect(MONGO_DB_URL, {
-  socketTimeoutMS: 10000,
-  serverSelectionTimeoutMS: 10000,
-  family: 4
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+// connect(MONGO_DB_URL, {
+//   socketTimeoutMS: 10000,
+//   serverSelectionTimeoutMS: 10000,
+//   family: 4
 
-}).then(
-  () => {
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
-  }
-).catch(err => {
-  console.log(err);
-});
+// }).then(
+//   () => {
+//     server.listen(port);
+//     server.on('error', onError);
+//     server.on('listening', onListening);
+//   }
+// ).catch(err => {
+//   console.log(err);
+// });
 
 
 /**
