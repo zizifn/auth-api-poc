@@ -1,6 +1,10 @@
-const jwt = require('express-jwt');
-const winston = require('winston');
-const { AUTH0_API_SIGN_SECRET, AUTH0_API_AUDIENCE, AUTH0_API_SIGN_ISSUER } = require('../config/config.js');
+import { AUTH0_API_AUDIENCE, AUTH0_API_SIGN_ISSUER, AUTH0_API_SIGN_SECRET } from '../config/config.js';
+
+import jwt from 'express-jwt';
+import pkg from 'winston';
+
+const { format: _format, transports: _transports, createLogger } = pkg;
+
 
 const auth0JWTCheck = jwt({
     secret: AUTH0_API_SIGN_SECRET,
@@ -9,11 +13,11 @@ const auth0JWTCheck = jwt({
     algorithms: ['HS256']
 });
 
-const winstonLogger = winston.createLogger({
+const winstonLogger = createLogger({
     level: 'info',
-    format: winston.format.json(),
+    format: _format.json(),
     transports: [
-        new winston.transports.Console()
+        new _transports.Console()
     ],
 });
 
@@ -39,7 +43,7 @@ const disableCache = (req, resp, next) => {
     next()
 }
 
-module.exports = {
+export {
     auth0JWTCheck,
     winstonLogger,
     addCrossOriginHeader,

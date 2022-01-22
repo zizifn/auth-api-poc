@@ -1,8 +1,10 @@
-var express = require("express");
-var router = express.Router();
+import { readNoteScope, writeNoteScope } from "../utils/scopes.js";
 
-const { MongoNote } = require("../db/note.js");
-const { readNoteScope, writeNoteScope } = require("../utils/scopes.js");
+import MongoNote from "../db/note.js";
+import { Router } from "express";
+
+var router = Router();
+
 
 const notes = [
   {
@@ -44,4 +46,4 @@ router.put("/note/:id", function (req, res, next) {
   res.json(notes);
 });
 
-module.exports = router;
+export default router;

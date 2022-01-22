@@ -1,30 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var cors = require('cors');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-require('dotenv').config()
-var indexRouter = require('./routes/index');
-var notesRouter = require('./routes/notes.js');
-var sessionRouter = require('./routes/session.js');
-var corssOriginRouter = require('./routes/cross-origin.js');
-var session = require('express-session')
-const { NODE_ENV, AUTH0_API_SIGN_SECRET } = require('./config/config.js');
-const { auth0JWTCheck, addCrossOriginHeader, disableCache } = require('./utils/middleware.js');
-const { NONAME } = require('dns');
+import 'express-async-errors';
+
+import { AUTH0_API_SIGN_SECRET, NODE_ENV } from './config/config.js';
+import { addCrossOriginHeader, auth0JWTCheck, disableCache } from './utils/middleware.js';
+import { join, resolve } from 'path';
+
+import { NONAME } from 'dns';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import corssOriginRouter from './routes/cross-origin.js';
+import createError from 'http-errors';
+import express from 'express';
+import indexRouter from './routes/index.js';
+import logger from 'morgan';
+import notesRouter from './routes/notes.js';
+import opentraceRouter from './routes/opentrace.js';
+import session from 'express-session';
+import sessionRouter from './routes/session.js';
+
 var app = express();
-require('express-async-errors')
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', join(resolve(), 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(join(resolve(), 'public')));
 var corsOptions = {
   //zizifn.github.io
   origin: ["http://localhost:4300", /\herokuapp\.com$/, /\zizi\.press$/, /\zizifn\.github\.io$/],
@@ -49,6 +52,7 @@ if (NODE_ENV === 'production') {
 
 app.use('/corss-origin-header', addCrossOriginHeader, cors(corsOptions), disableCache, corssOriginRouter);
 app.use('/session', session(sess), cors(corsOptions), disableCache, sessionRouter);
+app.use('/opentrace', opentraceRouter);
 app.use('/api/auth0', cors(corsOptions), auth0JWTCheck, disableCache, notesRouter);
 
 // catch 404 and forward to error handler
@@ -67,4 +71,4 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

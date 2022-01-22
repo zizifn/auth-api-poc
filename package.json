@@ -1,12 +1,17 @@
 {
   "name": "auth-api-poc",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "start-dev": "node ./bin/www"
+    "start": "node ./bin/www.js",
+    "start-dev": "node  ./bin/www.js"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.0.4",
+    "@opentelemetry/auto-instrumentations-node": "^0.27.1",
+    "@opentelemetry/sdk-node": "^0.27.0",
+    "axios": "^0.24.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -18,8 +23,10 @@
     "express-session": "^1.17.2",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "https-proxy-agent": "^5.0.0",
     "mongoose": "^6.0.14",
     "morgan": "~1.9.1",
+    "node-fetch": "^3.1.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

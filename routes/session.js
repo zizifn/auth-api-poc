@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+import { Router } from "express";
+var router = Router();
 
 const notes = [
   {
@@ -46,4 +46,4 @@ router.post("/json", async function (req, res, next) {
   }
 });
 
-module.exports = router;
+export default router;

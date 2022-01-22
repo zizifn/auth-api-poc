@@ -1,6 +1,6 @@
-var express = require("express");
-var path = require('path');
-var router = express.Router();
+import { Router } from "express";
+import { join } from 'path';
+var router = Router();
 
 
 router.get("/", async function (req, res, next) {
@@ -8,7 +8,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/favicon.ico", async function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/favicon.ico'));
+  res.sendFile(join(__dirname, '../public/favicon.ico'));
 });
 router.post("/json", async function (req, res, next) {
   res.json(req.body)
@@ -16,4 +16,4 @@ router.post("/json", async function (req, res, next) {
 router.get("/json", async function (req, res, next) {
   res.json({ test: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis dignissimos autem fuga voluptate, nisi pariatur vel eos accusantium officiis sed ipsum distinctio tempore voluptates natus. Perspiciatis est obcaecati assumenda nobis reprehenderit perferendis aperiam debitis, quis amet ab vero recusandae explicabo nostrum adipisci doloremque. Voluptas et excepturi, quos ipsa consequuntur veritatis?' })
 });
-module.exports = router;
+export default router;
