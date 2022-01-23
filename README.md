@@ -18,6 +18,9 @@
 
 ### open tracing enable via opentelemetry
 
+1. /opentrace
+   can both tracing browser and node. End to end use `<meta name="traceparent" content="{{traceparent}}">`
+
 ## 服务已经使用 action 部署到 heroku 上
 
 https://oauth2-api-note.herokuapp.com
